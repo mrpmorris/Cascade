@@ -1,4 +1,5 @@
 ﻿@page "/"
+@implements IDisposable
 @using Morris.Cascades
 
 <PageTitle>Counter</PageTitle>
@@ -57,5 +58,10 @@
     private void IncrementCalculatedValue()
     {
         CurrentCount.Value++;
+    }
+
+    void IDisposable.Dispose()
+    {
+        Subscription.Dispose();
     }
 }

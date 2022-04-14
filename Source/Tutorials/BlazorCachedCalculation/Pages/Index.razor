@@ -1,0 +1,61 @@
+﻿@page "/"
+@using Morris.Cascades
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+<h4>Last rendered @DateTime.Now.ToString("hh:mm:ss.fff")</h4>
+
+<div>
+    <p>CurrentCount.Count = @CurrentCount.Value</p>
+    <p><button class="btn btn-primary" @onclick=@(() => CurrentCount.Value++)>Increment value</button></p>
+    <p>The value above is the source used in a CPU intensive calculation below.</p>
+</div>
+<p>
+    Click the button below to reveal the UI and cause the first calculation to occur.
+</p>
+<p><button type=button @onclick=@(() => ShowUI = !ShowUI)>Show/Hide</button></p>
+@if (ShowUI)
+{
+    <p>Calculated.Value = @Calculated.Value</p>
+    <p>
+        The UI above is for the expensive-to-calculate value. Note how it takes 1 second to compute
+        each time you click the <strong>Increment value</strong> button above.
+    </p>
+    <p>
+        Clicking this <button type="button" @onclick=StateHasChanged>refresh</button> will cause the page
+        to re-render and the calculated value to be read again, but it will be instant because it knows its
+        source hasn't changed, so it can return its previously cached value.
+    </p>
+    <p>
+        Clicking the <strong>Increment value</strong> button when this UI is not being rendered will be
+        instant. The CalculatedValue will be marked as invalid but won't be recalculated until its
+        value is next read, which is when this UI is shown again and needs to render its value.
+    </p>
+}
+
+
+@code {
+    private SimpleSource<int> CurrentCount = new SimpleSource<int>();
+    private CalculatedSource<int, int> Calculated = null!;
+    private IDisposable Subscription = null!;
+
+    private bool ShowUI;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Calculated = new CalculatedSource<int, int>(CurrentCount, x =>
+        {
+            Thread.Sleep(1000);
+            Console.Beep();
+            return x * 2;
+        });
+        Subscription = Calculated.Subscribe(() => InvokeAsync(StateHasChanged));
+    }
+
+    private void IncrementCalculatedValue()
+    {
+        CurrentCount.Value++;
+    }
+}

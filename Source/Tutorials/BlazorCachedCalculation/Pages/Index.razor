@@ -46,12 +46,14 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        Calculated = new CalculatedSource<int, int>(CurrentCount, x =>
-        {
-            Thread.Sleep(1000);
-            Console.Beep();
-            return x * 2;
-        });
+        Calculated = new CalculatedSource<int, int>(
+            CurrentCount,
+            x =>
+            {
+                Thread.Sleep(1000);
+                Console.Beep();
+                return x * 2;
+            });
         Subscription = Calculated.Subscribe(() => InvokeAsync(StateHasChanged));
     }
 

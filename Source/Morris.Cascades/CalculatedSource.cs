@@ -1,44 +1,53 @@
 ﻿namespace Morris.Cascades;
 
-public sealed class CalculatedSource<TSource, T> : ChangeNotifierBase, ISource<T>
+public sealed class CalculatedSource<T> : CalculatedSourceBase<T>
 {
-	private bool IsCached = false;
-	private T CachedValue = default!;
-	private readonly ISource<TSource> Source = null!;
-	private readonly Func<TSource, T> Calculate = null!;
-	private readonly ISubscriber Subscriber = null!;
-
-	public CalculatedSource(ISource<TSource> source, Func<TSource, T> calculate)
+	private readonly ISource<T> Source = null!;
+	private readonly Func<T, T> Calculate = null!;
+	
+	public CalculatedSource(ISource<T> source, Func<T, T> calculate) : base(source)
 	{
 		Source = source ?? throw new ArgumentNullException(nameof(source));
 		Calculate = calculate ?? throw new ArgumentNullException(nameof(calculate));
-		Subscriber = new CallbackSubscriber(source, SourceChanged);
 	}
 
-
-	public T Value
-	{
-		get
-		{
-			if (!IsCached)
-			{
-				CachedValue = Calculate(Source.Value);
-				IsCached = true;
-			}
-			return CachedValue;
-		}
-	}
-
-	protected override void Dispose(bool disposing)
-	{
-		base.Dispose(disposing);
-		if (disposing)
-			Subscriber.Dispose();
-	}
-
-	private void SourceChanged()
-	{
-		IsCached = false;
-		NotifySubscribers();
-	}
+	protected override T GetCalulatedValue() => Calculate(Source.Value);
 }
+
+public sealed class XCalculatedSource<S1, TResult> : CalculatedSourceBase<TResult>
+{
+	private readonly ISource<S1> Source = null!;
+	private readonly Func<S1, TResult> Calculate = null!;
+
+	public XCalculatedSource(ISource<S1> source, Func<S1, TResult> calculate) : base(source)
+	{
+		Calculate = calculate ?? throw new ArgumentNullException(nameof(calculate));
+		Source = source ?? throw new ArgumentNullException(nameof(source));
+	}
+
+	protected override TResult GetCalulatedValue() => Calculate(Source.Value);
+}
+
+
+public sealed class XCalculatedSource<S1, S2, TResult> : CalculatedSourceBase<TResult>
+{
+	private readonly ISource<S1> Source1 = null!;
+	private readonly ISource<S2> Source2 = null!;
+	private readonly Func<S1, S2, TResult> Calculate = null!;
+
+	public XCalculatedSource(
+		ISource<S1> source1,
+		ISource<S2> source2,
+		Func<S1, S2, TResult> calculate)
+		: base(source1, source2)
+	{
+		Calculate = calculate ?? throw new ArgumentNullException(nameof(calculate));
+		Source1 = source1 ?? throw new ArgumentNullException(nameof(source1));
+		Source2 = source2 ?? throw new ArgumentNullException(nameof(source2));
+	}
+
+	protected override TResult GetCalulatedValue() => Calculate(Source1.Value, Source2.Value);
+}
+
+
+

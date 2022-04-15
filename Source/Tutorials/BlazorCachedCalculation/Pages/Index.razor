@@ -37,7 +37,7 @@
 
 
 @code {
-    private SimpleSource<int> CurrentCount = new SimpleSource<int>();
+    private ValueSource<int> CurrentCount = new ValueSource<int>();
     private CalculatedSource<int, int> Calculated = null!;
     private IDisposable Subscription = null!;
 

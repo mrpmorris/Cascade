@@ -1,9 +1,7 @@
 ﻿namespace Morris.Cascades;
 
-public interface ISource<T>
+public interface ISource<T> : IChangeNotifier
 {
 	T Value { get; }
-	void Subscribe(ISubscriber subscriber);
-	void Unsubscribe(ISubscriber subscriber);
 }
 

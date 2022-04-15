@@ -2,5 +2,5 @@
 
 public interface ISubscriber : IDisposable
 {
-	void Invalidate();
+	void SourceChanged();
 }

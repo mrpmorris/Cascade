@@ -1,24 +1,20 @@
-﻿using System.Collections.Immutable;
+﻿namespace Morris.Cascades;
 
-namespace Morris.Cascades;
-
-public class CalculatedSource<TSource, T> : ISource<T>, ISubscriber
+public sealed class CalculatedSource<TSource, T> : ChangeNotifierBase, ISource<T>
 {
-	private bool IsDisposed;
-	private readonly ISource<TSource> Source;
-	private Func<TSource, T> Calculate = null!;
-	private ImmutableHashSet<ISubscriber> Subscribers = ImmutableHashSet.Create<ISubscriber>();
+	private bool IsCached = false;
+	private T CachedValue = default!;
+	private readonly ISource<TSource> Source = null!;
+	private readonly Func<TSource, T> Calculate = null!;
+	private readonly ISubscriber Subscriber = null!;
 
 	public CalculatedSource(ISource<TSource> source, Func<TSource, T> calculate)
 	{
 		Source = source ?? throw new ArgumentNullException(nameof(source));
 		Calculate = calculate ?? throw new ArgumentNullException(nameof(calculate));
-
-		source.Subscribe(this);
+		Subscriber = new CallbackSubscriber(source, SourceChanged);
 	}
 
-	private T CachedValue = default!;
-	private bool IsCached = false;
 
 	public T Value
 	{
@@ -33,38 +29,16 @@ public class CalculatedSource<TSource, T> : ISource<T>, ISubscriber
 		}
 	}
 
-	void ISubscriber.Invalidate()
+	protected override void Dispose(bool disposing)
+	{
+		base.Dispose(disposing);
+		if (disposing)
+			Subscriber.Dispose();
+	}
+
+	private void SourceChanged()
 	{
 		IsCached = false;
-		foreach (ISubscriber subscriber in Subscribers)
-			subscriber.Invalidate();
-	}
-
-	public void Subscribe(ISubscriber subscriber)
-	{
-		ArgumentNullException.ThrowIfNull(subscriber);
-		Subscribers = Subscribers.Add(subscriber);
-	}
-
-	public void Unsubscribe(ISubscriber subscriber)
-	{
-		ArgumentNullException.ThrowIfNull(subscriber);
-		Subscribers = Subscribers.Remove(subscriber);
-	}
-
-	protected virtual void Dispose(bool disposing)
-	{
-		IsDisposed = true;
-		if (disposing)
-			Source.Unsubscribe(this);
-	}
-
-	public void Dispose()
-	{
-		if (IsDisposed)
-			return;
-
-		Dispose(disposing: true);
-		GC.SuppressFinalize(this);
+		NotifySubscribers();
 	}
 }

@@ -1,24 +1,23 @@
 ﻿namespace Morris.Cascades;
 
-public class SimpleSubscriber<T> : ISubscriber
+public abstract class SubscriberBase : ISubscriber
 {
-	private ISource<T> Source = null!;
-	private Action Invalidated = null!;
-	private bool IsDisposed;
+	private readonly IChangeNotifier Source;
+	protected bool IsDisposed { get; private set; }
 
-	public SimpleSubscriber(ISource<T> source, Action invalidated)
+	public SubscriberBase(IChangeNotifier source)
 	{
 		Source = source ?? throw new ArgumentNullException(nameof(source));
-		Invalidated = invalidated ?? throw new ArgumentNullException(nameof(invalidated));
-
 		Source.Subscribe(this);
 	}
 
-	void ISubscriber.Invalidate()
+	protected abstract void SourceChanged();
+
+	void ISubscriber.SourceChanged()
 	{
 		if (IsDisposed)
 			return;
-		Invalidated();
+		SourceChanged();
 	}
 
 	protected virtual void Dispose(bool disposing)

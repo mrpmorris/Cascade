@@ -1,4 +1,4 @@
-﻿namespace Morris.Cascades;
+﻿namespace Morris.Cascade;
 
 public static class ISourceExtensions
 {

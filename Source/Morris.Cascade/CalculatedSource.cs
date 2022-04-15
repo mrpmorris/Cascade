@@ -1,4 +1,4 @@
-﻿namespace Morris.Cascades;
+﻿namespace Morris.Cascade;
 
 public sealed class CalculatedSource<T> : CalculatedSourceBase<T>
 {

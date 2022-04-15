@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace Morris.Cascades;
+namespace Morris.Cascade;
 
 public abstract class ChangeNotifierBase : IChangeNotifier, IDisposable
 {

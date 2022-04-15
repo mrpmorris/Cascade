@@ -27,7 +27,7 @@ public class CalculatedSourceClassesGenerator : ISourceGenerator
 		builder.AppendLine("using System.Collections.Generic;");
 		builder.AppendLine("using System.Linq;");
 		builder.AppendLine("using System.Text;\r\n"); 
-		builder.AppendLine("namespace Morris.Cascades;\r\n");
+		builder.AppendLine("namespace Morris.Cascade;\r\n");
 		for (int i = 1; i <= 16; i++)
 			BuildClassSource(builder, i);
 		return builder.ToString();

@@ -1,4 +1,4 @@
-﻿namespace Morris.Cascades;
+﻿namespace Morris.Cascade;
 
 public class ValueSource<T> : ChangeNotifierBase, ISource<T>
 {

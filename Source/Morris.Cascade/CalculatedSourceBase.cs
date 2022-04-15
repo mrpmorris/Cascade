@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace Morris.Cascades;
+namespace Morris.Cascade;
 
 public abstract class CalculatedSourceBase<T> : ChangeNotifierBase, ISource<T>, ISubscriber
 {
@@ -13,7 +13,7 @@ public abstract class CalculatedSourceBase<T> : ChangeNotifierBase, ISource<T>, 
 	public CalculatedSourceBase(params IChangeNotifier[] sources)
 	{
 		ArgumentNullException.ThrowIfNull(sources);
-		if (sources.Count() == 0)
+		if (sources.Length == 0)
 			throw new ArgumentException("At least one source is required.");
 		if (sources.Any(x => x is null))
 			throw new ArgumentException("Null sources are not allowed.");

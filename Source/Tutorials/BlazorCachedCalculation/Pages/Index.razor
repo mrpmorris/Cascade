@@ -42,11 +42,11 @@
     private IDisposable Subscription = null!;
 
     private bool ShowUI;
-
+    
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        Calculated = new CalculatedSource<int, int>(
+        Calculated = new (
             CurrentCount,
             x =>
             {

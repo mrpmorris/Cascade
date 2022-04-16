@@ -4,6 +4,7 @@
 
 <h1>Spreadsheet</h1>
 
+<button type=button @onclick=ToggleAutoValues>@ToggleAutoValuesButtonCaption</button>
 <EditForm Model=@this>
     <CascadingValue Value=@Sheet IsFixed=@true>
         <table>
@@ -24,6 +25,3 @@
     </CascadingValue>
 </EditForm>
 
-@code {
-    private SheetData Sheet = new SheetData(5, 5);
-}

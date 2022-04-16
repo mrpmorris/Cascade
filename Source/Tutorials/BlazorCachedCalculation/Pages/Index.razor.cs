@@ -14,15 +14,9 @@ namespace BlazorCachedCalculation.Pages
 			Calculated = new(CurrentCount, x =>
 			{
 				Thread.Sleep(1000);
-				Console.Beep();
 				return x * 2;
 			});
 			Subscription = Calculated.Subscribe(() => InvokeAsync(StateHasChanged));
-		}
-
-		private void IncrementCalculatedValue()
-		{
-			CurrentCount.Value++;
 		}
 
 		void IDisposable.Dispose()

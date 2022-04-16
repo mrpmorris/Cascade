@@ -24,20 +24,16 @@ a, .btn-link {
 
 .calculated-cell {
     background-color: #eee;
-    border: 1px solid black;
-    animation: calculated-cell-flash 0.5s;
+    animation: calculated-cell-flash 0.1s;
 }
 
 @keyframes calculated-cell-flash {
     0% {
-        color: #fff;
-        background-color: #fff;
         border: 1px solid red;
+        background-color: red;
     }
     100% {
-        color: #000;
         background-color: #eee;
-        border: 1px solid black;
     }
 }
 

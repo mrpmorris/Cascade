@@ -4,7 +4,10 @@
 
 <h1>Spreadsheet</h1>
 
-<button type=button @onclick=ToggleAutoValues>@ToggleAutoValuesButtonCaption</button>
+<div class="mb-2">
+    <p>Either edit the values manually, or click the button below to alter random cells. (You can do both at the same time).</p>
+    <button class="btn @ToggleAutoValuesButtonClass" type=button @onclick=ToggleAutoValues>@ToggleAutoValuesButtonCaption</button>
+</div>
 <EditForm Model=@this>
     <CascadingValue Value=@Sheet IsFixed=@true>
         <table>

@@ -10,12 +10,13 @@ public partial class Spreadsheet : IDisposable
 	private SheetData Sheet = new SheetData(5, 5);
 
 	private string ToggleAutoValuesButtonCaption => GenerateAutoValues ? "Stop generating auto values" : "Start generating auto values";
+	private string ToggleAutoValuesButtonClass => GenerateAutoValues ? "btn-secondary" : "btn-primary";
 
 	private void ToggleAutoValues()
 	{
 		GenerateAutoValues = !GenerateAutoValues;
 		if (GenerateAutoValues)
-			GenerateAutoValuesTimer = new Timer(GenerateAutoValue, null, 0, 100);
+			GenerateAutoValuesTimer = new Timer(GenerateAutoValue, null, 0, 250);
 		else
 			GenerateAutoValuesTimer.Dispose();
 	}

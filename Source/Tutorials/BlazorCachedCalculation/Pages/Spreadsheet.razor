@@ -1,0 +1,29 @@
+﻿@page "/spreadsheet"
+
+<PageTitle>Spreadsheet</PageTitle>
+
+<h1>Spreadsheet</h1>
+
+<EditForm Model=@this>
+    <CascadingValue Value=@Sheet IsFixed=@true>
+        <table>
+            @for (int row = 0; row < Sheet.RowCount; row++)
+            {
+                <tr>
+                    @for (int column = 0; column < Sheet.ColumnCount; column++)
+                    {
+                        <td>
+                            <CascadingValue Name="@(Cell.LocationPropertyName)" Value=@((column, row)) IsFixed=@true>
+                                <Cell />
+                            </CascadingValue>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </CascadingValue>
+</EditForm>
+
+@code {
+    private SheetData Sheet = new SheetData(5, 5);
+}

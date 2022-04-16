@@ -1,0 +1,18 @@
+﻿@using Morris.Cascade
+
+@if (SourceCell is ValueSource<decimal> editableCell)
+{
+    <CascadingValue Value=@editableCell>
+        <EditableCell />
+    </CascadingValue>
+}
+else if (SourceCell is ISource<decimal> calculatedCell)
+{
+    <CascadingValue Value=@calculatedCell>
+        <CalculatedCell />
+    </CascadingValue>
+}
+else
+{
+    <text>Unknown cell type @SourceCell?.GetType()?.Name</text>
+}

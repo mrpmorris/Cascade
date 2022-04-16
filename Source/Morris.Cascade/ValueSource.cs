@@ -2,11 +2,17 @@
 
 public class ValueSource<T> : ChangeNotifierBase, ISource<T>
 {
-	private readonly IEqualityComparer<T>? EqualityComparer;
+	private readonly Func<T?, T?, bool>? AreEqual;
 
-	public ValueSource(IEqualityComparer<T>? equalityComparer = null)
+	public ValueSource(Func<T?, T?, bool>? areEqual = null)
 	{
-		EqualityComparer = equalityComparer;
+		AreEqual = areEqual;
+	}
+
+	public static ValueSource<T> Create(IEqualityComparer<T> equalityComparer)
+	{
+		ArgumentNullException.ThrowIfNull(equalityComparer);
+		return new ValueSource<T>(equalityComparer.Equals);
 	}
 
 
@@ -16,7 +22,7 @@ public class ValueSource<T> : ChangeNotifierBase, ISource<T>
 		get => _value;
 		set
 		{
-			if (EqualityComparer?.Equals(_value, value) == true)
+			if (AreEqual?.Invoke(_value, value) == true)
 				return;
 
 			_value = value;

@@ -5,7 +5,7 @@ namespace Morris.Cascade;
 public abstract class ChangeNotifierBase : IChangeNotifier, IDisposable
 {
 	private bool IsDisposed;
-	private SpinLock SpinLock = new SpinLock();
+	private SpinLock SpinLock = new();
 	private ImmutableHashSet<ISubscriber> Subscribers = ImmutableHashSet.Create<ISubscriber>();
 
 	protected void NotifySubscribers()

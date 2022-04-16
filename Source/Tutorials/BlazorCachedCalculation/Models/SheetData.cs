@@ -29,7 +29,7 @@ public class SheetData
 				Cells[column, row] = cell;
 				rowCells.Add(cell);
 			}
-			Cells[ColumnCount - 1, row] = new CompositeCalculatedSource<decimal>(rowCells, x => x.Sum());
+			Cells[ColumnCount - 1, row] = new CombinedSource<decimal>(rowCells, x => x.Sum());
 		}
 
 		var columnCells = new List<ISource<decimal>>();
@@ -38,7 +38,7 @@ public class SheetData
 			columnCells.Clear();
 			for (int row = 0; row < RowCount - 1; row++)
 				columnCells.Add(Cells[column, row]);
-			Cells[column, RowCount - 1] = new CompositeCalculatedSource<decimal>(columnCells, x => x.Sum());
+			Cells[column, RowCount - 1] = new CombinedSource<decimal>(columnCells, x => x.Sum());
 		}
 	}
 }

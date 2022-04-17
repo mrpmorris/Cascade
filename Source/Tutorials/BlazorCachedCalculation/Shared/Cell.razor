@@ -1,5 +1,10 @@
 ﻿@using Morris.Cascade
 
+@*
+    Values are passed to children using CascadingValue with IsFixed=true, this avoids
+    click events etc in this component from forcing child components to re-render.
+*@
+
 @if (SourceCell is ValueSource<decimal> editableCell)
 {
     <CascadingValue Value=@editableCell>

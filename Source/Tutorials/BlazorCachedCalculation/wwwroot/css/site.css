@@ -22,16 +22,21 @@ a, .btn-link {
     padding-top: 1.1rem;
 }
 
-.calculated-cell {
-    background-color: #eee;
-    animation: calculated-cell-flash 0.1s;
+.spreadsheet .cell {
+    width: 6em;
 }
+
+    .spreadsheet .cell.calculated {
+        background-color: #eee;
+        animation: calculated-cell-flash 0.1s;
+    }
 
 @keyframes calculated-cell-flash {
     0% {
         border: 1px solid red;
         background-color: red;
     }
+
     100% {
         background-color: #eee;
     }

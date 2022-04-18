@@ -7,7 +7,7 @@ public partial class Spreadsheet : IDisposable
 {
 	private bool IncrementRandomCells = false;
 	private Timer IncrementRandomCellsTimer = null!;
-	private SheetData Sheet = new SheetData(5, 5);
+	private SheetData Sheet = new SheetData(25, 25);
 
 	private string IncrementRandomCellsButtonCaption => IncrementRandomCells ? "Stop incrementing random cells" : "Start incrementing random cells";
 	private string IncrementRandomCellsButtonClass => IncrementRandomCells ? "btn-secondary" : "btn-primary";
@@ -23,7 +23,7 @@ public partial class Spreadsheet : IDisposable
 
 	void IDisposable.Dispose()
 	{
-		IncrementRandomCellsTimer.Dispose();
+		IncrementRandomCellsTimer?.Dispose();
 	}
 
 	private void GenerateAutoValue(object? _)

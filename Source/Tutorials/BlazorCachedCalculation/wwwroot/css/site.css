@@ -2,6 +2,19 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 h1:focus {
@@ -12,6 +25,16 @@ a, .btn-link {
     color: #0071c1;
 }
 
+form {
+    height: calc(100% - 40px);
+    overflow: auto;
+}
+
+.page {
+    height: 100vh;
+    width: 100vw;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -20,11 +43,36 @@ a, .btn-link {
 
 .content {
     padding-top: 1.1rem;
+    height: calc(100vh - 60px);
 }
 
-.spreadsheet .cell {
-    width: 6em;
+.spreadsheet {
+    height: calc(100% - 150px);
 }
+    .spreadsheet .header {
+        margin-bottom: 1em;
+    }
+
+    .spreadsheet .data {
+        position: relative;
+        height: 100%;
+        width: calc(100vw - 300px);
+        overflow: auto;
+    }
+
+        .spreadsheet .data .cell {
+            width: 6em;
+        }
+
+        .spreadsheet .data .fixed-right {
+            position: sticky;
+            right: 0;
+        }
+
+    .spreadsheet .data-row.fixed-bottom {
+        position: sticky;
+        bottom: 0;
+    }
 
     .spreadsheet .cell.calculated {
         background-color: #eee;

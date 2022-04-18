@@ -21,10 +21,10 @@
                 <table>
                     @for (int row = 0; row < Sheet.RowCount; row++)
                     {
-                        <tr>
+                        <tr class="@GetRowClass(row)">
                             @for (int column = 0; column < Sheet.ColumnCount; column++)
                             {
-                                <td>
+                                <td class="@GetCellClass(column)">
                                     <CascadingValue Name="@(Cell.LocationPropertyName)" Value=@((column, row)) IsFixed=@true>
                                         <Cell />
                                     </CascadingValue>

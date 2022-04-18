@@ -4,14 +4,29 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<Version>0.1.0.0</Version>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<PackageId>Cascade</PackageId>
+		<Product>Morris.Cascade</Product>
+		<Description>A state change propagator for .NET</Description>
+		<PackageIcon>cascade-logo.png</PackageIcon>
+		<PackageTags>State Change Reactive Cascade DotNet CSharp</PackageTags>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\..\MrPMorris.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
+
+	<ItemGroup Condition="'$(Configuration)'=='Release'">
+		<None Include="..\..\Images\cascade-logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
 	<ItemGroup>
-		<ProjectReference
-			Include="..\CodeGenerators\CodeGenerators.csproj"
-			OutputItemType="Analyzer"
-			ReferenceOutputAssembly="false"/>
+		<ProjectReference Include="..\CodeGenerators\CodeGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 	</ItemGroup>
 
 </Project>

@@ -16,7 +16,7 @@ public partial class Spreadsheet : IDisposable
 	{
 		IncrementRandomCells = !IncrementRandomCells;
 		if (IncrementRandomCells)
-			IncrementRandomCellsTimer = new Timer(GenerateAutoValue, null, 0, 250);
+			IncrementRandomCellsTimer = new Timer(GenerateAutoValue, null, 0, 50);
 		else
 			IncrementRandomCellsTimer.Dispose();
 	}

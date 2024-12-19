@@ -1,1 +1,0 @@
-dotnet build Source\Morris.Cascade.sln -c Release

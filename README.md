@@ -2,9 +2,7 @@
 
 ![](./Images/cascade-logo.png)
 
-Just an experiment at the moment.
-
-It lets you define sources of data which can be chained together to form calculations etc.
+Lets you define sources of data which can be chained together to form calculations.
 
 The values are cached to ensure the UI is responsive.
 
